@@ -93,6 +93,27 @@ class Span:
         self.exception_message = str(exc)
         self.status = SpanStatus.ERROR
 
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> "Span":
+        span = cls(
+            name=d["name"],
+            trace_id=d["trace_id"],
+            span_id=d.get("span_id", _new_id()),
+            parent_id=d.get("parent_id"),
+            start_ns=d.get("start_ns", 0),
+            end_ns=d.get("end_ns"),
+            status=SpanStatus(d.get("status", "UNSET")),
+        )
+        for k, v in (d.get("attributes") or {}).items():
+            span.set_attribute(k, v)
+        for e in d.get("events") or []:
+            span.add_event(e["name"], attributes=e.get("attributes"), ts_ns=e.get("ts_ns"))
+        exc = d.get("exception")
+        if exc and exc.get("type"):
+            span.exception_type = exc["type"]
+            span.exception_message = exc.get("message")
+        return span
+
     def to_dict(self) -> Dict[str, Any]:
         return {
             "name": self.name,
