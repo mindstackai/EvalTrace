@@ -8,8 +8,8 @@ from typing import Any, Dict, Optional
 class JudgeResult:
     trace_id: str
     rubric_name: str
-    scores: Dict[str, int]
-    overall: Optional[int] = None
+    scores: Dict[str, float]
+    overall: Optional[float] = None
     rationale: Optional[str] = None
     raw: Optional[Dict[str, Any]] = None
 
@@ -26,16 +26,16 @@ class JudgeResult:
 
 def normalize_judge_output(trace_id: str, rubric_name: str, output: Dict[str, Any]) -> JudgeResult:
     scores = output.get("scores") or {}
-    norm_scores: Dict[str, int] = {}
+    norm_scores: Dict[str, float] = {}
     for k, v in scores.items():
         try:
-            norm_scores[str(k)] = int(v)
+            norm_scores[str(k)] = float(v)
         except Exception:
             continue
 
     overall = output.get("overall")
     try:
-        overall = int(overall) if overall is not None else None
+        overall = float(overall) if overall is not None else None
     except Exception:
         overall = None
 

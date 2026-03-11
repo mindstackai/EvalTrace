@@ -10,14 +10,13 @@ from .base import RubricScore
 class RagAnswerQualityRubric:
     name: str = "rag_answer_quality"
     instructions: str = (
-        "You are grading a RAG system answer. Score each dimension on the provided scale. "
+        "You are grading a RAG system answer. Score each dimension from 0.0 to 1.0. "
         "Prefer evidence-based, grounded answers. Penalize hallucinations and unsupported claims."
     )
     dimensions: List[RubricScore] = (
-        RubricScore("correctness", 1, 5, "Is the answer correct given the retrieved context?"),
-        RubricScore("grounding", 1, 5, "Does the answer rely on retrieved context (no hallucinations)?"),
-        RubricScore("completeness", 1, 5, "Does it fully address the user question?"),
-        RubricScore("clarity", 1, 5, "Is it clear and easy to follow?"),
+        RubricScore("correctness", 0.0, 1.0, "Is the answer factually correct given the expected answer and retrieved context?"),
+        RubricScore("faithfulness", 0.0, 1.0, "Does the answer rely only on retrieved context without hallucinations or unsupported claims?"),
+        RubricScore("relevance", 0.0, 1.0, "Does the answer directly and completely address the user's question?"),
     )
 
     def as_dict(self) -> Dict:

@@ -8,8 +8,8 @@ from report.full_report import run_full_eval, format_report
 class FakeJudgeClient:
     def complete(self, prompt: str) -> str:
         return json.dumps({
-            "scores": {"correctness": 4, "grounding": 5, "completeness": 3, "clarity": 4},
-            "overall": 4,
+            "scores": {"correctness": 0.8, "faithfulness": 0.9, "relevance": 0.75},
+            "overall": 0.82,
             "rationale": "Good answer",
         })
 
@@ -48,7 +48,7 @@ def test_run_full_eval_single_trace():
     )
 
     assert len(report.judge_results) == 1
-    assert report.judge_results[0].scores["correctness"] == 4
+    assert report.judge_results[0].scores["correctness"] == 0.8
     assert len(report.latency_features) == 1
     assert report.latency_report is not None
     assert report.cost_report is not None

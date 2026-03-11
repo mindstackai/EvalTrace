@@ -18,8 +18,8 @@ def build_judge_prompt(payload: Dict[str, Any], rubric: Rubric) -> str:
         f"{json.dumps(payload, ensure_ascii=False, indent=2)}\n\n"
         "OUTPUT_JSON_SCHEMA:\n"
         "{\n"
-        "  \"scores\": { \"<dimension_key>\": <int> },\n"
-        "  \"overall\": <int>,\n"
+        "  \"scores\": { \"<dimension_key>\": <float 0.0-1.0> },\n"
+        "  \"overall\": <float 0.0-1.0>,\n"
         "  \"rationale\": \"<short reasoning>\"\n"
         "}\n"
     )

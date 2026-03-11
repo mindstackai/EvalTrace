@@ -9,7 +9,7 @@ from judge.runner import run_judge
 
 class FakeJudgeClient:
     def complete(self, prompt: str) -> str:
-        return json.dumps({"scores": {"correctness": 4, "grounding": 5}, "overall": 4, "rationale": "ok"})
+        return json.dumps({"scores": {"correctness": 0.8, "faithfulness": 0.9}, "overall": 0.85, "rationale": "ok"})
 
 
 def test_build_and_run_judge():
@@ -27,5 +27,5 @@ def test_build_and_run_judge():
     assert "EVALUATION_INPUT" in req.prompt
 
     res = run_judge(req, FakeJudgeClient())
-    assert res.scores["correctness"] == 4
-    assert res.overall == 4
+    assert res.scores["correctness"] == 0.8
+    assert res.overall == 0.85
