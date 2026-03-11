@@ -7,8 +7,8 @@ from typing import Dict, List, Protocol
 @dataclass(frozen=True, slots=True)
 class RubricScore:
     key: str
-    scale_min: int = 1
-    scale_max: int = 5
+    scale_min: float = 0.0
+    scale_max: float = 1.0
     description: str = ""
 
 

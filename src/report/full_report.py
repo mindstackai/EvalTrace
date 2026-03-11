@@ -92,16 +92,16 @@ def format_report(report: FullEvalReport) -> str:
         for jr in report.judge_results:
             lines.append(f"  Trace: {jr.trace_id[:12]}...")
             for dim, score in jr.scores.items():
-                lines.append(f"    {dim:<25} {score:>5}")
+                lines.append(f"    {dim:<25} {score:>5.2f}")
             if jr.overall is not None:
-                lines.append(f"    {'overall':<25} {jr.overall:>5}")
+                lines.append(f"    {'overall':<25} {jr.overall:>5.2f}")
             if jr.rationale:
                 lines.append(f"    Rationale: {jr.rationale}")
             lines.append("")
 
         # Average scores across traces
         if len(report.judge_results) > 1:
-            all_dims: Dict[str, List[int]] = {}
+            all_dims: Dict[str, List[float]] = {}
             for jr in report.judge_results:
                 for dim, score in jr.scores.items():
                     all_dims.setdefault(dim, []).append(score)

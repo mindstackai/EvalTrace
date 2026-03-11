@@ -21,7 +21,7 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["spanrecorder*", "judge*", "latency*", "storage*", "cost*", "report*"]
+include = ["spanrecorder*", "judge*", "latency*", "storage*", "cost*", "report*", "metrics*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
